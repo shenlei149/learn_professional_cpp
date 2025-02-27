@@ -16,9 +16,4 @@ execute_process (
 )
 endif()
 
-add_library(Employee Employee.cc)
-
-add_executable(String String.cc)
-
-add_subdirectory(test)
-add_subdirectory(Spreadsheet)
+add_subdirectory(v0)
