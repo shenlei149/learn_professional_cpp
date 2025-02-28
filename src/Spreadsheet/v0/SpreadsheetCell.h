@@ -3,6 +3,11 @@
 class SpreadsheetCell
 {
 public:
+	SpreadsheetCell() = default;
+	SpreadsheetCell(double initValue);
+	SpreadsheetCell(std::string_view initValue);
+
+public:
 	void SetValue(double value);
 	double GetValue() const;
 

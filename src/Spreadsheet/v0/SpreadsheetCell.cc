@@ -2,6 +2,16 @@
 
 #include <charconv>
 
+SpreadsheetCell::SpreadsheetCell(double initValue)
+	: value_ { initValue }
+{
+}
+
+SpreadsheetCell::SpreadsheetCell(std::string_view initValue)
+	: SpreadsheetCell { StringToDouble(initValue) }
+{
+}
+
 void
 SpreadsheetCell::SetValue(double value)
 {
