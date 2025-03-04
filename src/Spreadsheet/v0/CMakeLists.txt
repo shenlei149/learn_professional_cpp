@@ -17,3 +17,4 @@ execute_process (
 endif()
 
 add_library(SpreadsheetCell SpreadsheetCell.cc)
+add_library(Spreadsheet Spreadsheet.cc)
