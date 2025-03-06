@@ -40,6 +40,18 @@ Spreadsheet::operator=(const Spreadsheet &rhs)
 	return *this;
 }
 
+Spreadsheet::Spreadsheet(Spreadsheet &&src) noexcept
+{
+	Swap(src);
+}
+
+Spreadsheet &
+Spreadsheet::operator=(Spreadsheet &&rhs) noexcept
+{
+	Swap(rhs);
+	return *this;
+}
+
 Spreadsheet::~Spreadsheet()
 {
 	for (size_t i = 0; i < width_; i++)

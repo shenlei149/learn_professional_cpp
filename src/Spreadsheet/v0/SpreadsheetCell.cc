@@ -37,13 +37,13 @@ SpreadsheetCell::GetString() const
 }
 
 std::string
-SpreadsheetCell::DoubleToString(double value) const
+SpreadsheetCell::DoubleToString(double value)
 {
 	return std::to_string(value);
 }
 
 double
-SpreadsheetCell::StringToDouble(std::string_view value) const
+SpreadsheetCell::StringToDouble(std::string_view value)
 {
 	double number { 0.0 };
 	std::from_chars(value.data(), value.data() + value.size(), number);

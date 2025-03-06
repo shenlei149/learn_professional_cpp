@@ -15,8 +15,8 @@ public:
 	std::string GetString() const;
 
 private:
-	std::string DoubleToString(double value) const;
-	double StringToDouble(std::string_view value) const;
+	static std::string DoubleToString(double value);
+	static double StringToDouble(std::string_view value);
 
 private:
 	double value_ { 0 };

@@ -7,6 +7,8 @@ public:
 
 	Spreadsheet(const Spreadsheet &src);
 	Spreadsheet &operator=(const Spreadsheet &rhs);
+	Spreadsheet(Spreadsheet &&src) noexcept;
+	Spreadsheet &operator=(Spreadsheet &&rhs) noexcept;
 
 	~Spreadsheet();
 
