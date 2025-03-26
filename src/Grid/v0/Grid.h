@@ -21,8 +21,8 @@ public:
 	template<typename E>
 	Grid &operator=(const Grid<E> &rhs);
 
-	std::optional<T> &At(std::size_t x, std::size_t y);
-	const std::optional<T> &At(std::size_t x, std::size_t y) const;
+	template<typename Self>
+	auto &&At(this Self &&self, std::size_t x, std::size_t y);
 
 	std::size_t
 	GetWidth() const
@@ -83,18 +83,12 @@ Grid<T>::operator=(const Grid<E> &rhs)
 }
 
 template<typename T>
-std::optional<T> &
-Grid<T>::At(std::size_t x, std::size_t y)
+template<typename Self>
+auto &&
+Grid<T>::At(this Self &&self, std::size_t x, std::size_t y)
 {
-	return const_cast<std::optional<T> &>(std::as_const(*this).At(x, y));
-}
-
-template<typename T>
-const std::optional<T> &
-Grid<T>::At(std::size_t x, std::size_t y) const
-{
-	VerifyCoordinate(x, y);
-	return cells_[x + y * width_];
+	self.VerifyCoordinate(x, y);
+	return std::forward_like<Self>(self.cells_[x + y * self.width_]);
 }
 
 template<typename T>

@@ -17,4 +17,4 @@ execute_process (
 endif()
 
 # to compile Grid class template
-add_library(ExplicitInstantiation ExplicitInstantiation.cc)
+add_executable(ExplicitInstantiation ExplicitInstantiation.cc)
