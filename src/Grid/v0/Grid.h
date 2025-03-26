@@ -16,6 +16,11 @@ public:
 	Grid(Grid &&src) = default;
 	Grid &operator=(Grid &&rhs) = default;
 
+	template<typename E>
+	Grid(const Grid<E> &src);
+	template<typename E>
+	Grid &operator=(const Grid<E> &rhs);
+
 	std::optional<T> &At(std::size_t x, std::size_t y);
 	const std::optional<T> &At(std::size_t x, std::size_t y) const;
 
@@ -37,6 +42,7 @@ public:
 
 private:
 	void VerifyCoordinate(std::size_t x, std::size_t y) const;
+	void Swap(Grid &other) noexcept;
 
 private:
 	std::vector<std::optional<T>> cells_;
@@ -45,7 +51,7 @@ private:
 };
 
 template<typename T>
-inline Grid<T>::Grid(std::size_t width, std::size_t height)
+Grid<T>::Grid(std::size_t width, std::size_t height)
 	: width_ { width }
 	, height_ { height }
 {
@@ -53,14 +59,38 @@ inline Grid<T>::Grid(std::size_t width, std::size_t height)
 }
 
 template<typename T>
-inline std::optional<T> &
+template<typename E>
+Grid<T>::Grid(const Grid<E> &src)
+	: Grid { src.GetWidth(), src.GetHeight() }
+{
+	for (size_t i = 0; i < width_; i++)
+	{
+		for (size_t j = 0; j < height_; j++)
+		{
+			At(i, j) = src.At(i, j);
+		}
+	}
+}
+
+template<typename T>
+template<typename E>
+Grid<T> &
+Grid<T>::operator=(const Grid<E> &rhs)
+{
+	Grid<T> temp { rhs };
+	Swap(temp);
+	return *this;
+}
+
+template<typename T>
+std::optional<T> &
 Grid<T>::At(std::size_t x, std::size_t y)
 {
 	return const_cast<std::optional<T> &>(std::as_const(*this).At(x, y));
 }
 
 template<typename T>
-inline const std::optional<T> &
+const std::optional<T> &
 Grid<T>::At(std::size_t x, std::size_t y) const
 {
 	VerifyCoordinate(x, y);
@@ -68,7 +98,7 @@ Grid<T>::At(std::size_t x, std::size_t y) const
 }
 
 template<typename T>
-inline void
+void
 Grid<T>::VerifyCoordinate(std::size_t x, std::size_t y) const
 {
 	if (x >= width_)
@@ -80,4 +110,13 @@ Grid<T>::VerifyCoordinate(std::size_t x, std::size_t y) const
 	{
 		throw std::out_of_range { std::format("y ({}) must be less than height ({}).", y, height_) };
 	}
+}
+
+template<typename T>
+void
+Grid<T>::Swap(Grid &other) noexcept
+{
+	std::swap(width_, other.width_);
+	std::swap(height_, other.height_);
+	std::swap(cells_, other.cells_);
 }

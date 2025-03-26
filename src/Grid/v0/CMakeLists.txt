@@ -16,4 +16,5 @@ execute_process (
 )
 endif()
 
-add_library(Employee Employee.cc)
+# to compile Grid class template
+add_library(ExplicitInstantiation ExplicitInstantiation.cc)
