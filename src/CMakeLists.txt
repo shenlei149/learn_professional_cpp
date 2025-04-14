@@ -19,6 +19,8 @@ endif()
 add_library(Employee Employee.cc)
 
 add_executable(String String.cc)
+add_executable(CustomException CustomException.cc)
+target_link_libraries(CustomException PRIVATE stdc++exp)
 
 add_subdirectory(test)
 add_subdirectory(Spreadsheet)
