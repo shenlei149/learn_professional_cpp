@@ -201,7 +201,7 @@ public:
 	// For insert to be successful, the value shall not be in the graph yet.
 	// Returns true if a new node with given value has been added to
 	// the graph, and false if there was already a node with the given value.
-	bool Insert(T nodeValue);
+	std::pair<iterator, bool> Insert(T nodeValue);
 
 	// Returns true if the given node value was erased, false otherwise.
 	bool Erase(const T &nodeValue);
@@ -314,18 +314,18 @@ swap(DirectedGraph<T> &first, DirectedGraph<T> &second) noexcept
 }
 
 template<typename T>
-inline bool
+inline std::pair<typename DirectedGraph<T>::iterator, bool>
 DirectedGraph<T>::Insert(T nodeValue)
 {
 	auto iter { FindNode(nodeValue) };
 	if (iter != std::end(nodes_))
 	{
 		// Value is already in the graph, return false.
-		return false;
+		return { iterator { iter }, false };
 	}
 
 	nodes_.emplace_back(this, std::move(nodeValue));
-	return true;
+	return { iterator { std::prev(std::end(nodes_)) }, true };
 }
 
 template<typename T>
